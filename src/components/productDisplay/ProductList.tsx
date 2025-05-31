@@ -1,9 +1,10 @@
-import { Divider, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { useState } from "react";
 import productsData from "../../data/productsData";
 import type { Product } from "../../models/Product";
-import ProductListItem from "./ProductListItem";
+import ScrollableList from "../general/ScrollableList";
 import AddToCartDialog from "./AddToCartDialog";
+import ProductListItem from "./ProductListItem";
 
 const ProductList = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -19,30 +20,19 @@ const ProductList = () => {
 
     const onAddToCart = () => {};
 
-    const edgePadding = 4;
+    const data = productsData.slice(0, 3);
     return (
         <VStack w={"100%"} height={"100%"}>
-            <VStack
-                // border={"2px solid red"}
-                w={"100%"}
-                flex={1}
-                minH={0}
-                overflow={"auto"}
-                // border={"2px solid yellow"}
-                sx={{
-                    "& > *:first-child": { pt: edgePadding },
-                    "& > *:last-child": { pb: edgePadding },
-                }}
-                divider={<Divider />}
-            >
-                {productsData.map((p, idx) => (
+            <ScrollableList
+                data={data}
+                renderItem={(product, idx) => (
                     <ProductListItem
                         key={idx}
-                        product={p}
-                        onClick={() => onProductClick(p)}
+                        product={product}
+                        onClick={() => onProductClick(product)}
                     />
-                ))}
-            </VStack>
+                )}
+            />
             {currProduct && (
                 <AddToCartDialog
                     isOpen={isOpen}

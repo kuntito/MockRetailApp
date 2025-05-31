@@ -1,19 +1,21 @@
 import type { TextProps } from "@chakra-ui/react";
-import { HStack, Text } from "@chakra-ui/react";
+import PrefixedText from "./PrefixedText";
 
 interface Props extends TextProps {
     children: number;
 }
 
-const CurrencyText = ({children, ...rest}: Props) => {
+const CurrencyText = ({ children, ...rest }: Props) => {
+    const amount = children.toFixed(2);
     return (
-        <HStack
-            gap={0.5}
-            // border={"2px solid"}
+        <PrefixedText
+            prefix="£"
+            textWidth={"3.5rem"}
+            fontFamily={"monospace"}
+            {...rest}
         >
-            <Text {...rest}>£</Text>
-            <Text {...rest} width={"3.5rem"}>{children.toFixed(2)}</Text>
-        </HStack>
+            {amount}
+        </PrefixedText>
     );
 };
 
