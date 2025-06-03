@@ -2,6 +2,8 @@ import { Box, Center } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
+
+
     return (
         <Center w={"100vw"} h={"100vh"}>
             <Box

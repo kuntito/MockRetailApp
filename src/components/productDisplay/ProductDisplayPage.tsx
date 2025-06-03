@@ -1,4 +1,4 @@
-import { Box, VStack } from "@chakra-ui/react";
+import { Box, Text, VStack } from "@chakra-ui/react";
 import Header from "../general/Header";
 import ProductList from "./ProductList";
 import CartBadge from "../general/CartBadge";
@@ -7,7 +7,11 @@ const ProductDisplayPage = () => {
     return (
         <VStack gap={0} height={"100%"}>
             <Header>
-                <Box flex={1} />
+                <Box textAlign={"center"} flex={1}>
+                    <Text>
+                        Nihude Store
+                    </Text>
+                </Box>
                 <CartBadge />
             </Header>
             <Box

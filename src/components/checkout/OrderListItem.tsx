@@ -19,7 +19,7 @@ const OrderListItem = ({ orderItem }: Props) => {
             >
                 {orderItem.quantity}
             </PrefixedText>
-            <Text flex={1}>{orderItem.product_name}</Text>
+            <Text flex={1}>{orderItem.productName}</Text>
             <CurrencyText>{orderCost}</CurrencyText>
         </HStack>
     );

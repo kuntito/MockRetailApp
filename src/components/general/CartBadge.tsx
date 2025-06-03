@@ -1,16 +1,21 @@
 import { Box, Image } from "@chakra-ui/react";
 import CartIcon from "../../assets/ic_cart.svg";
-
+import useCartStore from "../../state-management/cartStore";
+import { Link } from "react-router-dom";
 
 const CartBadge = () => {
-    const selectedItemsCount =9;
-    
+    const cartItems = useCartStore((s) => s.state.cartItems);
+    const itemsInCart = cartItems.size;
+    // console.log(`cart: ${cartItems}`);
+    // console.log(`items in cart: ${itemsInCart}\n\n`);
 
     const badgeSize = "16px";
     return (
         <Box position={"relative"}>
-            <Image src={CartIcon} cursor={"pointer"} onClick={() => {}} />
-            {(selectedItemsCount > 0) && (
+            <Link to="/checkout">
+                <Image src={CartIcon} cursor={"pointer"} onClick={() => {}} />
+            </Link>
+            {itemsInCart > 0 && (
                 <Box
                     position={"absolute"}
                     top="-6px"
@@ -26,7 +31,7 @@ const CartBadge = () => {
                     alignItems="center"
                     justifyContent="center"
                 >
-                    {selectedItemsCount}
+                    {itemsInCart}
                 </Box>
             )}
         </Box>

@@ -18,7 +18,6 @@ const ProductList = () => {
         setIsOpen(true);
     };
 
-    const onAddToCart = () => {};
 
     const data = productsData.slice(0, 3);
     return (
@@ -38,7 +37,6 @@ const ProductList = () => {
                     isOpen={isOpen}
                     onDismiss={onDismiss}
                     product={currProduct}
-                    onAddToCart={onAddToCart}
                 />
             )}
         </VStack>
