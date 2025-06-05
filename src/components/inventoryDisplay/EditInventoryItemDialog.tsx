@@ -1,4 +1,4 @@
-import { Text, useToast, VStack } from "@chakra-ui/react";
+import { HStack, Switch, Text, useToast, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import type { Product } from "../../models/Product";
 import useInventoryStore from "../../state-management/inventoryStore";
@@ -27,10 +27,12 @@ const EditInventoryItemDialog = ({ initItem, isOpen, onDismiss }: Props) => {
 
     const [name, setName] = useState(initItem.name);
     const [price, setPrice] = useState(initItem.price);
+    const [availability, setAvailability] = useState(initItem.availability);
 
     useEffect(() => {
         setName(initItem.name);
         setPrice(initItem.price);
+        setAvailability(initItem.availability)
     }, [initItem]);
 
     const toast = useToast();
@@ -43,9 +45,9 @@ const EditInventoryItemDialog = ({ initItem, isOpen, onDismiss }: Props) => {
         });
     };
 
-    const isItemUnchanged = name === initItem.name && price === initItem.price;
+    const isItemUnchanged = name === initItem.name && price === initItem.price && initItem.availability === availability;
     const handleModifyItem = () => {
-        const res = modifyItem(initItem.id, { name, price });
+        const res = modifyItem(initItem.id, { name, price, availability });
 
         const description = res ? `update successful!` : "an error occurred";
         const status = res ? "success" : "error";
@@ -91,6 +93,15 @@ const EditInventoryItemDialog = ({ initItem, isOpen, onDismiss }: Props) => {
                             onChange={(newPrice) => setPrice(newPrice)}
                         />
                     </VStack>
+                    <HStack>
+                        <Text>is available</Text>
+                        <Switch
+                            isChecked={availability}
+                            // isChecked={avail}
+                            onChange={(e) => setAvailability(e.target.checked)}
+                            colorScheme="green"
+                        />
+                    </HStack>
                 </VStack>
             }
             footer={

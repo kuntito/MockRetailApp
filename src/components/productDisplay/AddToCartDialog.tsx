@@ -80,7 +80,7 @@ const AddToCartDialog = ({ product, isOpen, onDismiss }: Props) => {
         const res = modifyQuantity(product.id, quantity);
 
         const description = res
-            ? `"${product.name}" update to ${quantity} items`
+            ? `"${product.name}" updated to ${quantity} items`
             : "an error occurred";
         const status = res ? "info" : "error";
 
@@ -90,16 +90,18 @@ const AddToCartDialog = ({ product, isOpen, onDismiss }: Props) => {
     };
 
     const handleRemoveFromCart = () => {
-        const res = removeItem(product.id);
-
-        const description = res
-            ? `"${product.name}" removed from cart`
-            : "an error occurred";
-        const status = res ? "info" : "error";
-
-        showToast(description, status);
-
-        if (res) onDismiss();
+        if (window.confirm(`remove ${product.name} from cart?`)) {
+            const res = removeItem(product.id);
+    
+            const description = res
+                ? `"${product.name}" removed from cart`
+                : "an error occurred";
+            const status = res ? "info" : "error";
+    
+            showToast(description, status);
+    
+            if (res) onDismiss();
+        }
     };
 
     return (

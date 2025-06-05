@@ -15,9 +15,10 @@ const InventoryListItem = ({ product, onClick }: Props) => {
         setIsDialogOpen(false);
     };
 
+    const opacity = product.availability ? 1 : 0.5
     return (
         <>
-            <HStack w={"100%"} ps={"16px"}>
+            <HStack opacity={opacity} w={"100%"} ps={"16px"}>
                 <HStack flex={1}>
                     <Text cursor={"pointer"} onClick={() => {
                         onClick();
