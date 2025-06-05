@@ -31,7 +31,7 @@ const AppDialog = ({ isOpen, onDismiss, body, footer }: Props) => {
             <AlertDialogOverlay />
             <AlertDialogContent>
                 <AlertDialogCloseButton />
-                <AlertDialogBody px={"40px"}>{body}</AlertDialogBody>
+                <AlertDialogBody pt={"32px"}>{body}</AlertDialogBody>
                 <AlertDialogFooter>
                     <HStack
                         w={"100%"}

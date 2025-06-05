@@ -2,7 +2,7 @@ import { Button, type ButtonProps } from "@chakra-ui/react";
 
 
 const AppButton = ({ children, ...rest }: ButtonProps) => {
-    return <Button minW={"64px"} borderRadius={100} {...rest}>
+    return <Button flexShrink={0} minW={"64px"} borderRadius={100} {...rest}>
         {children}
     </Button>;
 };

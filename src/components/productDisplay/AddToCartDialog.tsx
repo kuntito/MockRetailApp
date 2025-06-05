@@ -27,7 +27,9 @@ const AddToCartDialog = ({ product, isOpen, onDismiss }: Props) => {
     // if item not in cart, it should be `1`
     // hence, we need to know if the item is in cart
 
-    const { addToCart, modifyQuantity, removeItem } = useCartStore((s) => s);
+    const addToCart = useCartStore(s => s.addToCart);
+    const modifyQuantity = useCartStore(s => s.modifyQuantity);
+    const removeItem = useCartStore(s => s.removeItem);
 
     const cartItem = useCartStore((s) => s.state.cartItems.get(product.id));
     const initQuantity = cartItem?.quantity ?? 1;
