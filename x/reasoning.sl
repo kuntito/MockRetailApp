@@ -346,3 +346,36 @@ i'd also have to implement the payment feature, for now, a dummy button to place
 which would create the order.
 
 * claude thinks it looks good, i'd start off defining the models
+
+reet, i want to define the payment page.
+the succesful payment indicates an order has been made.
+the business model is customer makes orders, nihude, the store owner delivers to their houses.
+
+there's two parts to making an order.
+
+the customer info,
+name
+address
+phone number
+
+card details,
+name on card
+card number
+expiry date
+CVV code
+
+
+both things are instrumental in making an order.
+at this point of the app, the user must have selected items.
+
+once payment is made, nihude gets a notification with the customers order. i understand the best UX is to have customers register so they only enter their details once, but implementing a customer feature would put back the project delivery date.
+
+i want to get this done as soon as possible. so no registration right now, any one who wants to order would have to add their name, address and phone number before ordering.
+
+now, i need to implement three pages.
+
+one where i collect customer info
+one where i collect their card details
+one where i indicate successful payment
+
+i don't want to bother about transaction errors right now.
