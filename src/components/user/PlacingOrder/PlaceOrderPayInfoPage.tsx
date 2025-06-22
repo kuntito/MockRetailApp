@@ -1,10 +1,14 @@
 import { Box, HStack, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { isStringNotEmpty } from "../../../misc_functions/isStringNotEmpty";
+import type { CustomerInfo } from "../../../models/CustomerInfo";
+import useCartStore from "../../../state-management/cartStore";
+import useOrderApiStore from "../../../state-management/orderApiStore";
 import AppButton from "../../general/AppButton";
 import AppHeader from "../../general/AppHeader";
 import VerticalTextInputField from "../../general/VerticalTextInputField";
+import useActionWithToast from "../../../hooks/useActionWithToast";
 
 type CardInfo = {
     nameOnCard: string;
@@ -24,7 +28,7 @@ const validateCardInfo = (cardInfo: CardInfo): boolean => {
     return true;
 };
 
-const PlaceOrderPayInfo = () => {
+const PlaceOrderPayInfoPage = () => {
     const [cardInfo, setCardInfo] = useState<CardInfo>({
         nameOnCard: "",
         cardNumber: "",
@@ -32,10 +36,10 @@ const PlaceOrderPayInfo = () => {
         cvv: "",
     });
 
-    const [isInfoValid, setIsInfoValid] = useState(false);
+    const [isCardInfoValid, setIsCardInfoValid] = useState(false);
     useEffect(() => {
         const validationCheck = validateCardInfo(cardInfo);
-        setIsInfoValid(validationCheck);
+        setIsCardInfoValid(validationCheck);
     }, [cardInfo]);
 
     return (
@@ -44,7 +48,10 @@ const PlaceOrderPayInfo = () => {
                 <Text>Placing Order: Payment</Text>
             </AppHeader>
             <VStack p={"16px"} w={"100%"} h={"100%"}>
-                <Text w={"100%"}>card details, please:</Text>
+                <VStack>
+                    <Text>your order costs ???</Text>
+                    <Text w={"100%"}>card details, please:</Text>
+                </VStack>
                 <Box h={"24px"} />
                 <VStack w={"100%"}>
                     <VerticalTextInputField
@@ -94,27 +101,49 @@ const PlaceOrderPayInfo = () => {
                     </HStack>
                 </VStack>
                 <Box h={"12px"} />
-                {PlaceOrderButton(isInfoValid)}
+                <PlaceOrderButton isCardInfoValid={isCardInfoValid} />
+                {/* {PlaceOrderButton(true)} */}
             </VStack>
         </VStack>
     );
 };
 
-export default PlaceOrderPayInfo;
+export default PlaceOrderPayInfoPage;
 
-const PlaceOrderButton = (isInfoValid: boolean) => {
+interface PlaceOrderProps {
+    isCardInfoValid: boolean;
+}
+
+const PlaceOrderButton = ({ isCardInfoValid }: PlaceOrderProps) => {
+    const [searchParams] = useSearchParams();
+    const customerInfo: CustomerInfo = {
+        name: searchParams.get("name") || "NA",
+        postCode: searchParams.get("postCode") || "NA",
+        phoneNumber: searchParams.get("phoneNumber") || "NA",
+    };
+
     const navigate = useNavigate();
+    const clearCart = useCartStore(s => s.clearCart);
+    const onOrderSuccess = () => {
+        clearCart();
+        navigate("/");
+    };    
 
+    const executeAction = useActionWithToast(() => onOrderSuccess());
+
+    const getCartItems = useCartStore((s) => s.getCartItems);
+    const orderItems = getCartItems();
+
+    const placeOrder = useOrderApiStore(s => s.placeOrder)
     const handlePayment = () => {
-        // this where you call the place order function
-        const success = true;
-        if (success) {
-            navigate("/orderPlaced");
+        const isPaymentSuccessful = true;
+        if (isPaymentSuccessful) {
+            executeAction(() => placeOrder(customerInfo, orderItems))
         }
     };
 
     return (
-        <AppButton disabled={!isInfoValid} onClick={handlePayment}>
+        <AppButton disabled={!isCardInfoValid} onClick={handlePayment}>
             pay
         </AppButton>
     );

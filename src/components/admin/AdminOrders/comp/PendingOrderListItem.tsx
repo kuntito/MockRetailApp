@@ -1,36 +1,39 @@
-import { HStack, Text } from "@chakra-ui/react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 import type { Order } from "../../../../models/Order";
-import useAdminOrderStore from "../../../../state-management/adminOrderStore";
-import CurrencyText from "../../../general/CurrencyText";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
     order: Order;
 }
 
 const PendingOrderListItem = ({ order }: Props) => {
-    const getOrderItems = useAdminOrderStore((s) => s.getOrderItems);
-    const orderItems = getOrderItems(order.id);
-
-    if (!orderItems) {
-        return <Text>{`error, order ${order.id} has no items`}</Text>;
-    }
-
-    const itemCount = orderItems.length;
+    const navigate = useNavigate();
+    const onClick = () => {
+        navigate(`pendingOrderDetails/${order.id}`);
+    };
 
     return (
-        <HStack>
-            <HStack>
-                <Text>{order.custName}</Text>
-                <CurrencyText>{order.totalAmount}</CurrencyText>
+        <VStack
+            onClick={onClick}
+            cursor={"pointer"}
+            w={"100%"}
+            gap={0}
+        >
+            <HStack w={"100%"}>
+                <Text align={"start"} flex={1}>
+                    {order.custName}
+                </Text>
+                <Text>£{order.totalCost.toFixed(2)}</Text>
             </HStack>
-            <HStack>
-                <HStack>
-                    <Text>${itemCount} item</Text>
-                    <Text>{itemCount > 0 ? "s" : ""}</Text>
-                </HStack>
-                <Text fontFamily={"mono"}>03-mar-2025</Text>
+            <HStack w={"100%"}>
+                <Text fontSize={"md"} align={"start"} flex={1}>
+                    {order.itemCount} item{order.itemCount > 1 ? "s" : ""}
+                </Text>
+                <Text fontSize={"small"} fontFamily={"mono"}>
+                    03-mar-2025
+                </Text>
             </HStack>
-        </HStack>
+        </VStack>
     );
 };
 

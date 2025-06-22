@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import type { ActionResult } from "../hooks/useActionWithToast";
 import type { Product } from "../models/Product";
+import { dummyProducts } from "../dummyData/dummyProducts";
 
 interface InventoryStore {
     inventory: Map<string, Product>;
@@ -14,6 +15,9 @@ interface InventoryStore {
 
 const useInventoryStore = create<InventoryStore>((set, get) => {
     const inventory = new Map<string, Product>();
+    dummyProducts.forEach(product => {
+        inventory.set(product.id, product);
+    });
 
     const addToInventory = (product: Product): ActionResult => {
         // TODO validate product

@@ -1,18 +1,13 @@
 import { Box, Text, VStack } from "@chakra-ui/react";
-import AppHeader from "../../general/AppHeader";
-import TextInputField from "../../general/TextInputField";
 import { useEffect, useState } from "react";
 import AppButton from "../../general/AppButton";
-import { Link } from "react-router-dom";
-
-type CustomerInfoForm = {
-    name: string;
-    postCode: string;
-    phoneNumber: string;
-};
+import AppHeader from "../../general/AppHeader";
+import VerticalTextInputField from "../../general/VerticalTextInputField";
+import { useNavigate } from "react-router-dom";
+import type { CustomerInfo } from "../../../models/CustomerInfo";
 
 // TODO properly validate form
-const validateCustForm = (form: CustomerInfoForm): boolean => {
+const validateCustForm = (form: CustomerInfo): boolean => {
     const nameIsValid = form.name.trim().length > 0;
     const postCodeIsValid = form.name.trim().length > 0;
     const phoneIsValid = form.phoneNumber.trim().length > 0;
@@ -20,19 +15,19 @@ const validateCustForm = (form: CustomerInfoForm): boolean => {
     return nameIsValid && postCodeIsValid && phoneIsValid;
 };
 
-const PlaceOrderCustInfo = () => {
-    const [custForm, setCustForm] = useState<CustomerInfoForm>({
+const PlaceOrderCustInfoPage = () => {
+    const [custInfo, setCustInfo] = useState<CustomerInfo>({
         name: "",
         postCode: "",
         phoneNumber: "",
     });
 
-    const [isFormValid, setFormValid] = useState(false);
+    const [isInfoValid, setIsInfoValid] = useState(false);
     useEffect(() => {
-        const validationCheck = validateCustForm(custForm);
+        const validationCheck = validateCustForm(custInfo);
 
-        setFormValid(validationCheck);
-    }, [custForm]);
+        setIsInfoValid(validationCheck);
+    }, [custInfo]);
 
     return (
         <VStack>
@@ -44,49 +39,61 @@ const PlaceOrderCustInfo = () => {
                 <Box h={"32px"} />
                 <VStack w={"100%"}>
                     <VStack w={"100%"} gap={2}>
-                        <TextInputField
+                        <VerticalTextInputField
                             label="your name"
-                            value={custForm.name}
+                            value={custInfo.name}
                             onChange={(newName) => {
-                                setCustForm({
-                                    ...custForm,
+                                setCustInfo({
+                                    ...custInfo,
                                     name: newName,
                                 });
                             }}
-                            isVertical
                         />
-                        <TextInputField
+                        <VerticalTextInputField
                             label="post code"
-                            value={custForm.postCode}
+                            value={custInfo.postCode}
                             onChange={(newPostCode) => {
-                                setCustForm({
-                                    ...custForm,
+                                setCustInfo({
+                                    ...custInfo,
                                     postCode: newPostCode,
                                 });
                             }}
-                            isVertical
                         />
-                        <TextInputField
+                        <VerticalTextInputField
                             label="phone number"
-                            value={custForm.phoneNumber}
+                            value={custInfo.phoneNumber}
                             onChange={(newPhoneNumber) => {
-                                setCustForm({
-                                    ...custForm,
+                                setCustInfo({
+                                    ...custInfo,
                                     phoneNumber: newPhoneNumber,
                                 });
                             }}
-                            isVertical
                         />
                     </VStack>
-                    <Link to={"/placeOrderPayInfo"}>
-                        <AppButton disabled={!isFormValid}>
-                            make payment
-                        </AppButton>
-                    </Link>
+                    {ContinueToPayment(custInfo, isInfoValid)}
                 </VStack>
             </VStack>
         </VStack>
     );
 };
 
-export default PlaceOrderCustInfo;
+export default PlaceOrderCustInfoPage;
+
+const ContinueToPayment = (custInfo: CustomerInfo, isInfoValid: boolean) => {
+    const navigate = useNavigate();
+
+    const params = new URLSearchParams({
+        name: custInfo.name,
+        postCode: custInfo.postCode,
+        phoneNumber: custInfo.phoneNumber,
+    });
+
+    return (
+        <AppButton
+            disabled={!isInfoValid}
+            onClick={() => navigate(`/placeOrderPayInfo?${params.toString()}`)}
+        >
+            make payment
+        </AppButton>
+    );
+};

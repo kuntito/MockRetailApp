@@ -1,23 +1,28 @@
-import useAdminOrderStore from "../../../../state-management/adminOrderStore";
+import { Text, VStack } from "@chakra-ui/react";
+import type { Order } from "../../../../models/Order";
 import ItemList from "../../../general/ItemList";
 import PendingOrderListItem from "./PendingOrderListItem";
-import { Text } from "@chakra-ui/react";
 
-const PendingOrders = () => {
-    const pendingOrders = useAdminOrderStore((s) => s.pendingOrders);
-    const data = Array.from(pendingOrders.values());
+interface Props {
+    pendingOrders: Order[];
+}
+
+const PendingOrders = ({pendingOrders: data}: Props) => {
+    console.log(data);
 
     if (data.length === 0) {
-        return <Text textAlign={"center"}>no pending orders</Text>
+        return <Text textAlign={"center"}>no pending orders</Text>;
     }
 
     return (
-        <ItemList
-            data={data}
-            renderItem={(item, idx) => (
-                <PendingOrderListItem order={item} key={idx} />
-            )}
-        />
+        <VStack h={"100%"}>
+            <ItemList
+                data={data}
+                renderItem={(item, idx) => (
+                    <PendingOrderListItem order={item} key={idx} />
+                )}
+            />
+        </VStack>
     );
 };
 

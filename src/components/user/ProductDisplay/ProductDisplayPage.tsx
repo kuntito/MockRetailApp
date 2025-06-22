@@ -9,9 +9,12 @@ import { useState } from "react";
 import AddToCartDialog from "./comp/AddToCartDialog";
 import EditCartItemDialog from "./comp/EditCartItemDialog";
 import useCartStore from "../../../state-management/cartStore";
+import useInventoryStore from "../../../state-management/inventoryStore";
 
 const ProductDisplayPage = () => {
-    const data = dummyProducts;
+    const inventory = useInventoryStore(s => s.inventory);
+    // const data = dummyProducts;
+    const data = Array.from(inventory.values());
 
     // for product item dialog
     const [isDiagOpen, setDiagOpen] = useState(false);

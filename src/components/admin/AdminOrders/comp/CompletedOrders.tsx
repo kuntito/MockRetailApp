@@ -1,9 +1,27 @@
-import React from 'react'
+import { Text, VStack } from "@chakra-ui/react";
+import type { Order } from "../../../../models/Order";
+import ItemList from "../../../general/ItemList";
+import CompletedOrderListItem from "./CompletedOrderListItem";
 
-const CompletedOrers = () => {
-  return (
-    <div>CompletedOrers</div>
-  )
+interface Props {
+    completedOrders: Order[];
 }
 
-export default CompletedOrers
+const CompletedOrders = ({ completedOrders: data }: Props) => {
+    if (data.length === 0) {
+        return <Text textAlign={"center"}>no completed orders</Text>;
+    }
+
+    return (
+        <VStack h={"100%"}>
+            <ItemList
+                data={data}
+                renderItem={(item, idx) => (
+                    <CompletedOrderListItem order={item} key={idx} />
+                )}
+            />
+        </VStack>
+    );
+};
+
+export default CompletedOrders;

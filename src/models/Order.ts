@@ -4,5 +4,7 @@ export interface Order {
     custAddress: string;
     custPhone: string;
     dateTime: string;
-    totalAmount: number;
+    totalCost: number;
+    itemCount: number;
+    isMarkedComplete: boolean;
 }

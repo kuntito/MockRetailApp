@@ -7,7 +7,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "1",
         productName: "Coca-Cola Classic",
         priceAtOrderTime: 1.25,
-        orderId: "1"
+        orderId: "1",
+        isAttendedTo: false,
     },
     {
         id: "2",
@@ -15,7 +16,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "2",
         productName: "Pepsi",
         priceAtOrderTime: 1.20,
-        orderId: "2"
+        orderId: "2",
+        isAttendedTo: false,
     },
     {
         id: "3",
@@ -23,7 +25,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "3",
         productName: "Sprite",
         priceAtOrderTime: 1.15,
-        orderId: "3"
+        orderId: "3",
+        isAttendedTo: false,
     },
     {
         id: "4",
@@ -31,7 +34,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "4",
         productName: "Fanta Orange",
         priceAtOrderTime: 1.10,
-        orderId: "4"
+        orderId: "4",
+        isAttendedTo: false,
     },
     {
         id: "5",
@@ -39,7 +43,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "5",
         productName: "Dr Pepper",
         priceAtOrderTime: 1.30,
-        orderId: "5"
+        orderId: "5",
+        isAttendedTo: false,
     },
     {
         id: "6",
@@ -47,7 +52,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "6",
         productName: "Mountain Dew",
         priceAtOrderTime: 1.35,
-        orderId: "6"
+        orderId: "6",
+        isAttendedTo: false,
     },
     {
         id: "7",
@@ -55,7 +61,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "7",
         productName: "Red Bull Energy Drink",
         priceAtOrderTime: 2.50,
-        orderId: "7"
+        orderId: "7",
+        isAttendedTo: false,
     },
     {
         id: "8",
@@ -63,7 +70,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "8",
         productName: "Monster Energy",
         priceAtOrderTime: 2.75,
-        orderId: "8"
+        orderId: "8",
+        isAttendedTo: false,
     },
     {
         id: "9",
@@ -71,7 +79,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "9",
         productName: "Bottled Water",
         priceAtOrderTime: 0.99,
-        orderId: "9"
+        orderId: "9",
+        isAttendedTo: false,
     },
     {
         id: "10",
@@ -79,7 +88,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "10",
         productName: "Orange Juice",
         priceAtOrderTime: 2.25,
-        orderId: "10"
+        orderId: "10",
+        isAttendedTo: false,
     },
     {
         id: "11",
@@ -87,7 +97,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "11",
         productName: "Apple Juice",
         priceAtOrderTime: 2.20,
-        orderId: "11"
+        orderId: "11",
+        isAttendedTo: false,
     },
     {
         id: "12",
@@ -95,7 +106,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "12",
         productName: "Iced Tea (Sweet)",
         priceAtOrderTime: 1.75,
-        orderId: "12"
+        orderId: "12",
+        isAttendedTo: false,
     },
     {
         id: "13",
@@ -103,7 +115,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "13",
         productName: "Gatorade Sports Drink",
         priceAtOrderTime: 1.85,
-        orderId: "13"
+        orderId: "13",
+        isAttendedTo: false,
     },
     {
         id: "14",
@@ -111,7 +124,8 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "14",
         productName: "Diet Coke",
         priceAtOrderTime: 1.25,
-        orderId: "14"
+        orderId: "14",
+        isAttendedTo: false,
     },
     {
         id: "15",
@@ -119,6 +133,7 @@ export const dummyOrderItems: OrderItem[] = [
         productId: "15",
         productName: "7UP",
         priceAtOrderTime: 1.15,
-        orderId: "15"
+        orderId: "15",
+        isAttendedTo: false,
     }
 ];

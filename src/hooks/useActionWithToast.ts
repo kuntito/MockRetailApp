@@ -24,6 +24,7 @@ const useActionWithToast = (onSuccess?: () => void) => {
             status,
             isClosable: true,
             position: "top",
+            duration: 800
         });
     };
 

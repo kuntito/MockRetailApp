@@ -379,3 +379,92 @@ one where i collect their card details
 one where i indicate successful payment
 
 i don't want to bother about transaction errors right now.
+
+**
+next up is the place order function.
+
+the order is made of the customer info.
+the order details.
+what happens when the user makes order.
+i'd make a payment request.
+
+if successful, i'd insert the order and order items into their respective collections.
+
+at this point, i'd assume all payments go through.
+i'm not adding anything to the mongo collections.
+
+i simply want to simulate this. i'd define an Order Api store.
+this would serve as a local collection for orders and order items.
+i'd modify this to include the order and order items.
+
+and nihude can view each order from the admin side of the page.
+
+therefore, build OrderApiStore
+
+i think i need two stores.
+placeOrderStore and ordersApiStore
+
+placeOrderStore is responsible for storing the customer info
+across pages, not sure if i need it though.
+
+perhaps, i'd describe the problem first.
+once the user checks out their items, they're prompted to enter their info.
+name, post code and phone number
+once they submit that, they're navigated to a payment page
+they enter their card details, i make the payment request.
+
+if successful, i create an order and add the necessary items to the api
+clear the cart and navigate to an order success page.
+
+the question is how do i store the customer info across pages.
+would it make sense to create a store just because?
+
+**
+when nihude views an order, each order item should have a checkbox that allows
+her know what items she's packed. once all items are checked, she is able to mark the order as complete.
+
+yes, but how do you implement the checkbox logic. each item has a check box, so can i define an array of checkbox items. it'd be a state variable. there'd be one check for each order item.
+
+and how would you pass it to the AdminOrderDetailListItem component?
+
+**
+this point, i've built all the pages for an MVP.
+i've got a product display page that allows users to add items to cart, modify cart items.
+
+i've got an order summary page that shows users selected items and total order cost.
+
+placing an order is in two steps,
+entering customer info, name, postcode and phone number
+
+and entering card details
+once card is verified and payment is successful an order is placed
+and the user is navigated to the home page.
+
+on the admin side, there's two buttons, inventory and orders.
+
+in inventory, admin can add new items or modify/remove existing items.
+these items are what reflect in the product display page.
+
+the admin orders page shows customer orders.
+there's two tabs, pending and completed orders.
+
+all new orders are pending by default.
+admin can select a pending order, it navigates to a new page where
+they can view each order item. they can mark each order item as attended to and when complete, they can mark the order as complete.
+
+at which point, it's moved to the completed orders tab.
+
+i'm trying to do the least to get something running. is there anything major i've missed out.
+
+this point, i want to rewrite the codebase and address the minutiae.
+form validation, user experience, data persistence and other issues. plus, i didn't implement the payment, i simply simulated it.
+
+and so far, i haven't made API requests, i've simulated a local API so there's still work to do but as far as someone being able to make an order that nihude can attend to, have i checked all the essential boxes?
+
+**
+reet, forget payment for now.
+i just need to deliver this, i'd restart the app and add:
+
+API integration
+form validation
+whatsapp text to validate order?

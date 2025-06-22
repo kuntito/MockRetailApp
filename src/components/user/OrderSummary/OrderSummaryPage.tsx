@@ -1,16 +1,28 @@
-import { VStack, Text, Center, HStack } from "@chakra-ui/react";
-import AppHeader from "../../general/AppHeader";
+import { Center, HStack, Text, VStack } from "@chakra-ui/react";
+import { Link, useNavigate } from "react-router-dom";
+import useActionWithToast from "../../../hooks/useActionWithToast";
 import useCartStore from "../../../state-management/cartStore";
-import OrderListItem from "./comp/OrderListItem";
-import ItemList from "../../general/ItemList";
-import { Link } from "react-router-dom";
-import { dummyOrderItems } from "../../../dummyData/dummyOrderItems";
+import useOrderApiStore from "../../../state-management/orderApiStore";
 import AppButton from "../../general/AppButton";
+import AppHeader from "../../general/AppHeader";
 import CurrencyText from "../../general/CurrencyText";
+import ItemList from "../../general/ItemList";
+import OrderListItem from "./comp/OrderListItem";
 
 const OrderSummaryPage = () => {
     const getCartItems = useCartStore((s) => s.getCartItems);
     const orderItems = getCartItems();
+
+    const navigate = useNavigate();
+    
+    // const clearCart = useCartStore((s) => s.clearCart);
+    // const placeOrder = useOrderApiStore((s) => s.placeOrder);
+    // const onOrderSuccess = () => {
+    //     clearCart();
+    //     navigate("/");
+    // };
+
+    // const executeAction = useActionWithToast(() => onOrderSuccess());
 
     // const orderItems = dummyOrderItems;
 
@@ -31,6 +43,15 @@ const OrderSummaryPage = () => {
         (sum, oi) => sum + oi.quantity * oi.priceAtOrderTime,
         0
     );
+
+    const handlePlaceOrder = () => {
+        // const dummyCustomerInfo: CustomerInfo = getRandomCustomer();
+        // executeAction(() => placeOrder(dummyCustomerInfo, orderItems));
+
+        // this point, we navigate to the customer info page
+        navigate("/placeOrderCustInfo");
+    };
+
     return (
         <VStack h={"100%"} pb={"16px"}>
             <AppHeader>
@@ -57,11 +78,13 @@ const OrderSummaryPage = () => {
                         {totalOrderCost}
                     </CurrencyText>
                 </HStack>
-                <Link to={"/placeOrderCustInfo"}>
-                    <AppButton bg={"palette.success"} color={"palette.50"}>
-                        Place Order
-                    </AppButton>
-                </Link>
+                <AppButton
+                    onClick={handlePlaceOrder}
+                    bg={"palette.success"}
+                    color={"palette.50"}
+                >
+                    Place Order
+                </AppButton>
             </VStack>
         </VStack>
     );

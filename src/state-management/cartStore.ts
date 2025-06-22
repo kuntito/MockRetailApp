@@ -17,6 +17,7 @@ interface CartStore {
     getTotalCartItems: () => number;
     modifyQuantity: (productId: string, newQuantity: number) => ActionResult;
     removeItemFromCart: (productId: string) => ActionResult;
+    clearCart: () => ActionResult;
 }
 
 const useCartStore = create<CartStore>((set, get) => {
@@ -37,6 +38,7 @@ const useCartStore = create<CartStore>((set, get) => {
                 productId: productId,
                 productName: nameAtOrder,
                 priceAtOrderTime: priceAtOrder,
+                isAttendedTo: false,
             };
 
             const newCart = new Map(store.cart);
@@ -126,6 +128,12 @@ const useCartStore = create<CartStore>((set, get) => {
         return Array.from(get().cart.values());
     };
 
+    const clearCart = (): ActionResult => {
+        get().cart.clear();
+
+        return {success: true, message: "cart cleared"};
+    }
+
     return {
         cart: cart,
         addToCart: addToCart,
@@ -135,6 +143,7 @@ const useCartStore = create<CartStore>((set, get) => {
         removeItemFromCart: removeItemFromCart,
         getTotalCartItems: getTotalCartItems,
         getCartItems: getCartItems,
+        clearCart: clearCart,
     };
 });
 
