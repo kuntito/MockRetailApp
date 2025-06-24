@@ -1,11 +1,11 @@
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { Center, HStack, Text, VStack } from "@chakra-ui/react";
 import Page from "../../general/Page";
 import ItemList from "../../general/ItemList";
 import CartItemListItem from "./components/CartItemListItem";
 import useCartStore from "../../../state-management/cartStore";
 import AppButton from "../../general/AppButton";
 import CurrencyText from "../../general/CurrencyText";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
     return <Page title={"checkout"} content={<Content />} />;
@@ -24,7 +24,18 @@ const Content = () => {
 
     const navigate = useNavigate();
     const handleEnterDetails = () => {
-        navigate("customerInfo")
+        navigate("customerInfo");
+    };
+
+    if (cartItems.length === 0) {
+        return <Center w={"100%"} h={"100%"}>
+            <VStack>
+                <Text> no items in cart</Text>
+                <Link to="/">
+                    <Text textDecor={"underline"}>add items</Text>
+                </Link>
+            </VStack>
+        </Center>;
     }
 
     return (
@@ -41,7 +52,12 @@ const Content = () => {
                 <Text lineHeight={1}>Total:</Text>
                 <CurrencyText fontSize={"0.9rem"}>{subTotal}</CurrencyText>
             </HStack>
-            <AppButton onClick={handleEnterDetails} bg={"palette.success"} color={"palette.50"}>
+            <AppButton
+                onClick={handleEnterDetails}
+                bg={"palette.success"}
+                color={"palette.50"}
+                disabled={cartItems.length === 0}
+            >
                 continue
             </AppButton>
         </VStack>
