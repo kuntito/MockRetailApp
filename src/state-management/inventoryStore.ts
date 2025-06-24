@@ -1,11 +1,20 @@
-import { create } from "zustand";
-import type { ActionResult } from "../hooks/useActionWithToast";
-import type { Product } from "../models/Product";
-import { dummyProducts } from "../dummyData/dummyProducts";
+// this would fetch products from the api
 
+import { create } from "zustand";
+import type { Product } from "../models/Product";
+import type { ActionResult } from "../types/ActionResult";
+import { getUniqueId } from "../utils/getUniqueId";
+import {
+    getStoredInventory,
+    INVENTORY_STORAGE_KEY,
+    saveInventory,
+} from "../utils/inventoryStorage";
+
+// in our case dummy data
 interface InventoryStore {
-    inventory: Map<string, Product>;
-    addToInventory: (product: Product) => ActionResult;
+    itemMap: Map<string, Product>;
+    // fetchItems: () => void;
+    addToInventory: (productName: string, unitPrice: number) => ActionResult;
     modifyInventoryItem: (
         productId: string,
         updates: Partial<Product>
@@ -14,17 +23,39 @@ interface InventoryStore {
 }
 
 const useInventoryStore = create<InventoryStore>((set, get) => {
-    const inventory = new Map<string, Product>();
-    dummyProducts.forEach(product => {
-        inventory.set(product.id, product);
+    const itemMap: Map<string, Product> = getStoredInventory();
+
+    // Add storage event listener to update state when changes occur in other tabs
+    window.addEventListener("storage", (e) => {
+        if (e.key === INVENTORY_STORAGE_KEY) {
+            set({ itemMap: getStoredInventory() });
+        }
     });
 
-    const addToInventory = (product: Product): ActionResult => {
-        // TODO validate product
-        if (!product.name.trim()) {
-            return { success: false, message: "name cannot be blank!" };
+    // const fetchItems = () => {
+    //     set(() => {
+    //         // const products = new Map<string, Product>(
+    //         //     dummyProducts.map((p) => [p.id, p])
+    //         // );
+
+    //         const products = new Map<string, Product>();
+    //         saveInventory(products);
+
+    //         return {
+    //             itemMap: products,
+    //         };
+    //     });
+    // };
+
+    const addToInventory = (
+        productName: string,
+        unitPrice: number
+    ): ActionResult => {
+        if (!productName.trim()) {
+            return { success: false, message: "name cannot be blank! " };
         }
-        if (product.price <= 0) {
+
+        if (unitPrice <= 0) {
             return {
                 success: false,
                 message: "price must be greater than zero",
@@ -32,28 +63,42 @@ const useInventoryStore = create<InventoryStore>((set, get) => {
         }
 
         set((store) => {
-            const newInventory = new Map(store.inventory);
-            newInventory.set(product.id, product);
+            const newItemMap = new Map(store.itemMap);
+            const product: Product = {
+                id: getUniqueId(),
+                name: productName,
+                price: unitPrice,
+                availability: true,
+            };
+
+            
+            newItemMap.set(product.id, product);
+            saveInventory(newItemMap);
 
             return {
-                ...store,
-                inventory: newInventory,
+                itemMap: newItemMap,
             };
         });
 
-        return { success: true, message: `${product.name} added to inventory` };
+
+        return {
+            success: true,
+            message: `${productName} added to inventory`,
+        };
     };
 
     const modifyInventoryItem = (
-        itemId: string,
+        productId: string,
         updates: Partial<Product>
     ): ActionResult => {
-        const currItem = get().inventory.get(itemId);
+        const currItem = get().itemMap.get(productId);
         if (!currItem) {
-            return { success: false, message: "item not in inventory" };
+            return {
+                success: false,
+                message: "item not in inventory",
+            };
         }
 
-        // TODO ensure modification is valid
         if (updates.price !== undefined && updates.price <= 0) {
             return {
                 success: false,
@@ -62,49 +107,58 @@ const useInventoryStore = create<InventoryStore>((set, get) => {
         }
 
         set((store) => {
-            const newInventory = new Map(store.inventory);
+            const newItems = new Map(store.itemMap);
             const modifiedItem = {
                 ...currItem,
-                ...updates
-            }
-            newInventory.set(itemId, modifiedItem);
+                ...updates,
+            };
+
+            
+            newItems.set(productId, modifiedItem);
+            saveInventory(newItems);
 
             return {
                 ...store,
-                inventory: newInventory
-            }
-        })
+                itemMap: newItems,
+            };
+        });
 
         return {
             success: true,
-            message: `${currItem.name} updated!`
-        }
+            message: `${currItem.name} updated!`,
+        };
     };
 
-    const deleteInventoryItem = (itemId: string) => {
-        const currItem = get().inventory.get(itemId);
+    const deleteInventoryItem = (productId: string): ActionResult => {
+        const currItem = get().itemMap.get(productId);
         if (!currItem) {
-            return { success: false, message: "item not in inventory" };
+            return {
+                success: false,
+                message: "item not in inventory",
+            };
         }
 
         set((store) => {
-            const newInventory = new Map(store.inventory);
-            newInventory.delete(itemId);
+            const newItems = new Map(store.itemMap);
+            newItems.delete(productId);
+
+            saveInventory(newItems);
 
             return {
                 ...store,
-                inventory: newInventory
-            }
-        })
+                itemMap: newItems,
+            };
+        });
 
         return {
             success: true,
-            message: `${currItem.name} deleted!`
-        }
-    }
+            message: `${currItem.name} deleted!`,
+        };
+    };
 
     return {
-        inventory: inventory,
+        itemMap: itemMap,
+        // fetchItems: fetchItems,
         addToInventory: addToInventory,
         modifyInventoryItem: modifyInventoryItem,
         deleteInventoryItem: deleteInventoryItem,

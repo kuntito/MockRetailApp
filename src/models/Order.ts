@@ -1,8 +1,8 @@
 export interface Order {
     id: string;
-    custName: string;
-    custAddress: string;
-    custPhone: string;
+    customerName: string;
+    customerPostCode: string;
+    customerPhone: string;
     dateTime: string;
     totalCost: number;
     itemCount: number;
