@@ -1,54 +1,79 @@
-# React + TypeScript + Vite
+# Nihude Mock Retail App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based mock e-commerce application for Nihude retail store, showcasing a complete shopping experience with separate customer and admin interfaces.
 
-Currently, two official plugins are available:
+## 🔗 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **[Customer Interface](https://nihude-mock.vercel.app/)**
+- **[Admin Dashboard](https://nihude-mock.vercel.app/admin)**<br>
 
-## Expanding the ESLint configuration
+<img width="360" alt="a" src="https://github.com/user-attachments/assets/61a2087e-da43-405e-b55d-cb529a232356" />
+<img width="360" alt="b" src="https://github.com/user-attachments/assets/6b7fef1e-9111-4a52-8fb8-792d8aae7348" /><br><br>
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+<img width="360" alt="00" src="https://github.com/user-attachments/assets/da5a269b-bf91-4c0c-b23e-99d5d734e60f" />
+<img width="360" alt="01" src="https://github.com/user-attachments/assets/4331244d-1ad8-4c9d-bce5-c1b978601be0" /><br>
+<img width="360" alt="02" src="https://github.com/user-attachments/assets/8d4dbba9-c28b-4576-ac51-4507c36bfcf0" />
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 📋 Features
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Customer Side
+- Browse available products
+- Add items to cart
+- Complete checkout process
+- Place orders with customer information
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Admin Side
+- **Inventory Management**: Add new products to inventory
+- **Order Management**: View and process customer orders
+- **Real-time Updates**: Items added to inventory automatically appear on the customer side
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## 🚀 How to Test
+
+1. **Start with the Admin Panel**:
+   - Visit [admin dashboard](https://nihude-mock.vercel.app/admin)
+   - Navigate to the inventory section
+   - Add some products (name and price)
+
+2. **Switch to Customer View**:
+   - Open [customer view](https://nihude-mock.vercel.app/) in the same browser
+   - Your added products should now be visible
+   - Add items to cart and complete a purchase
+
+3. **Check Orders**:
+   - Return to the admin panel
+   - View the orders section to see customer orders
+   - Process and manage orders as needed
+
+> **Note**: added items and placed orders will only be visible within the same browser.
+
+## 🛠 Tech Stack
+
+- **Frontend**: React + TypeScript
+- **Routing**: React Router
+- **UI**: Chakra UI
+- **State Management**: Zustand
+- **Deployment**: Vercel
+
+## ⚠️ Limitations
+
+This is a **mock application** for demonstration purposes:
+- No backend API or database
+- Data is stored locally in browser storage
+- No user authentication
+- No real payment processing
+- Changes are not persisted across different browsers/devices
+
+## 🎯 Purpose
+
+This project showcases:
+- React application architecture
+- State management patterns
+- Routing implementation
+- Responsive UI design
+- Component composition
+- TypeScript usage in React
+
+---
+
+*This is a portfolio project demonstrating frontend development skills. A production version would require proper backend infrastructure, authentication, and data persistence.*
+
